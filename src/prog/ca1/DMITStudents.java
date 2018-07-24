@@ -302,6 +302,11 @@ public static char checkChar(String msg){
         }
         while((!variable.matches("[a-zA-Z_]+"))){
         variable = JOptionPane.showInputDialog(null,msg,"Input",JOptionPane.QUESTION_MESSAGE);    
+        try{
+        variable.matches("[a-zA-Z_]+");
+        }catch(NullPointerException e){
+        return '*';
+        }
         }
         char checkFirstLetter = variable.charAt(0);
         if (checkFirstLetter == 'B' || checkFirstLetter == 'b'){
@@ -330,6 +335,12 @@ public static char checkChar(String msg){
                 }  
        while(!variable.matches("[0-9]+") || !(variable.length() == 8) ){
             variable = JOptionPane.showInputDialog(null,msg,"Input",JOptionPane.QUESTION_MESSAGE); 
+            try{
+           while(!variable.matches("[0-9]+") || !(variable.length() == 8) ){
+            variable = JOptionPane.showInputDialog(null,msg,"Input",JOptionPane.QUESTION_MESSAGE); 
+           } }catch(NullPointerException e){
+                return 0;
+                }  
         }
        int integer = Integer.parseInt(variable);   
       
@@ -352,12 +363,30 @@ public static char checkChar(String msg){
         if(msg.equals("Please enter course")){
           while(!variable.matches("[a-zA-Z_]+")){
         variable = JOptionPane.showInputDialog(null,
-                msg,"input",JOptionPane.QUESTION_MESSAGE);    
+                msg,"input",JOptionPane.QUESTION_MESSAGE); 
+        try{
+            if(msg.equals("Please enter course")){
+        variable.matches("[a-zA-Z_]+");
+            } else{
+        variable.matches("^[ A-Za-z]+$");
+            }
+        }catch(NullPointerException e){
+        return "*";
+        }
         }
         }else{
               while(!variable.matches("^[ A-Za-z]+$")){
         variable = JOptionPane.showInputDialog(null,
-                msg,"input",JOptionPane.QUESTION_MESSAGE);    
+                msg,"input",JOptionPane.QUESTION_MESSAGE);
+        try{
+            if(msg.equals("Please enter course")){
+        variable.matches("[a-zA-Z_]+");
+            } else{
+        variable.matches("^[ A-Za-z]+$");
+            }
+        }catch(NullPointerException e){
+        return "*";
+        }
         }
         }
           if(msg.equals("Please enter course") )
