@@ -192,11 +192,18 @@ public class DMITStudents extends JFrame{
         name = JOptionPane.showInputDialog(null,
                 "Please enter student's name to search",
                 "DMIT Student",JOptionPane.QUESTION_MESSAGE); 
+        try{
+                name.matches("^[ A-Za-z]+$");
+            }catch(NullPointerException e){
+                return;
+            }
         while(!name.matches("^[ A-Za-z]+$")){
+           
         name = JOptionPane.showInputDialog(null,
                 "Please enter student's name to search",
                 "DMIT Student",JOptionPane.QUESTION_MESSAGE);     
         }
+        
         
         do{
             for(int index = 0;index < MainIndex;index++){
