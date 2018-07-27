@@ -22,9 +22,9 @@ public class DMITStudents extends JFrame{
         //Set and initialize array of Student class name,course,gender and contact respectively with a size of 100
     private static Student[] student = new Student [100];
     public static void setColor(){
-        UIManager.put("OptionPane.background", Color.white);
-        UIManager.put("Panel.background", Color.white);
-        UIManager.put("Button.background", Color.white);
+        UIManager.put("OptionPane.background", Color.yellow);
+        UIManager.put("Panel.background", Color.yellow);
+        UIManager.put("Button.background", Color.yellow);
     }
    //A method that will end the process 
     public static void programTerminated(){
