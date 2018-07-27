@@ -40,23 +40,6 @@ public class DMITStudents{
             student[i] = new Student (Temp[i].getName(),Temp[i].getCourse(),Temp[i].getMobile(),Temp[i].getGender());
         }
     }
-//    public static void changingArraySize(){
-//        
-//        
-//        System.out.println(Temp);
-//        Temp = new Student[MainIndex+1];
-//        for(int i = 0;i < student.length;i++){
-//            Temp[i] = new Student (student[i].getName(),student[i].getCourse(),student[i].getMobile(),student[i].getGender());
-//        }
-//        student = new Student[MainIndex+1];
-//        System.out.println(student.length);
-//
-//        for(int i = 0;i < student.length-2;i++){
-//            student[i] = new Student (Temp[i].getName(),Temp[i].getCourse(),Temp[i].getMobile(),Temp[i].getGender());
-//        }
-//        student[MainIndex] = new Student("Null","Null",1,'c');
-//        Temp = student;
-//    }
    //A method that will end the process 
     public static void programTerminated(){
        JOptionPane.showMessageDialog(null,
