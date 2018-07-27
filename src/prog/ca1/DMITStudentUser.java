@@ -17,7 +17,6 @@ public class DMITStudentUser{
         DMITStudents.initaliseArray();
         String strOption;
         int Option = 0;
-        
         do{
         strOption = JOptionPane.showInputDialog(null,"Enter your option: "
                 + "\n1. Display Students"
@@ -27,7 +26,7 @@ public class DMITStudentUser{
                 + "\n5. Edit Student Info"
                 + "\n6. Exit",
                 "DMIT Students",JOptionPane.INFORMATION_MESSAGE);
-        System.out.println(strOption);
+
         if (strOption == null){
           System.exit(6);
         }

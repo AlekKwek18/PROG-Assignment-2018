@@ -9,23 +9,54 @@ package prog.ca1;
  *
  * @author guozh
  */
-import java.awt.Color;
-import javax.swing.JFrame;
-import javax.swing.UIManager;
 //
-
 import javax.swing.JOptionPane;
 //import static programming.assignment.Student.student;
-public class DMITStudents extends JFrame{
+public class DMITStudents{
+    
     //Array index will be set to 3 as location 0 to 2 has been initized.
     private static int MainIndex = 3;
-        //Set and initialize array of Student class name,course,gender and contact respectively with a size of 100
-    private static Student[] student = new Student [100];
+    //Set and initialize array of Student class name,course,gender and contact respectively with a size of 4
+    private static Student[] student = new Student [MainIndex+1];
+    //Set and initalize array of Temp class name,course,gender and contact respectively with a size of 5
+    private static Student[] Temp = new Student [MainIndex+2];
     public static void setColor(){
-        UIManager.put("OptionPane.background", Color.yellow);
-        UIManager.put("Panel.background", Color.yellow);
-        UIManager.put("Button.background", Color.yellow);
+        
     }
+    public static void changingArray(){
+        int index = MainIndex; // get current index 
+         index++;
+        if(MainIndex + 2 == 6 ){
+            //Do nothing
+        }else {
+        Temp = new Student[index];
+        }
+        for(int i = 0;i < MainIndex;i++){
+            Temp[i] = new Student (student[i].getName(),student[i].getCourse(),student[i].getMobile(),student[i].getGender());
+        }
+                index++;
+        student = new Student[index];
+        for(int i = 0;i < MainIndex;i++ ){
+            student[i] = new Student (Temp[i].getName(),Temp[i].getCourse(),Temp[i].getMobile(),Temp[i].getGender());
+        }
+    }
+//    public static void changingArraySize(){
+//        
+//        
+//        System.out.println(Temp);
+//        Temp = new Student[MainIndex+1];
+//        for(int i = 0;i < student.length;i++){
+//            Temp[i] = new Student (student[i].getName(),student[i].getCourse(),student[i].getMobile(),student[i].getGender());
+//        }
+//        student = new Student[MainIndex+1];
+//        System.out.println(student.length);
+//
+//        for(int i = 0;i < student.length-2;i++){
+//            student[i] = new Student (Temp[i].getName(),Temp[i].getCourse(),Temp[i].getMobile(),Temp[i].getGender());
+//        }
+//        student[MainIndex] = new Student("Null","Null",1,'c');
+//        Temp = student;
+//    }
    //A method that will end the process 
     public static void programTerminated(){
        JOptionPane.showMessageDialog(null,
@@ -257,6 +288,7 @@ public class DMITStudents extends JFrame{
         }
         student[MainIndex] = new Student(name,course,mobile,gender);
         MainIndex++;
+        changingArray();
         
            JOptionPane.showMessageDialog(null,"The new student has been added successfully","DMIT Student",JOptionPane.INFORMATION_MESSAGE); 
     }
@@ -268,7 +300,6 @@ public class DMITStudents extends JFrame{
         int TempMobile;
         char TempGender;
         
-        System.out.println(MainIndex);
         int flag= 0;
                 
                 nameDelete = JOptionPane.showInputDialog(null,"Please enter student's name to delete.");
@@ -293,6 +324,7 @@ public class DMITStudents extends JFrame{
                 }
                if(flag == 1){
                 MainIndex = MainIndex-1;
+                changingArray();
                }
                 if(flag != 1){
                     JOptionPane.showMessageDialog(null, "The student name " + nameDelete + " cannot be found!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -396,7 +428,7 @@ public static char checkChar(String msg){
         }
         }
         }
-          if(msg.equals("Please enter course") )
+          if(msg.equals("Please enter student's course:") )
             variable = variable.toUpperCase();
         return variable;
     }
