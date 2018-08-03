@@ -30,23 +30,35 @@ public class DMITStudents{
     /**
      * InputStream data type called music is created
      * File(x) is the wave file
-     * 
+     * music = File(x)
+     * AudioStream sound is created, allowing music to play
      */
     public static void playMusic(String x){
         try{
         InputStream music;
         music = new FileInputStream(new File(x));
-        AudioStream audios = new AudioStream(music);
-        AudioPlayer.player.start(audios);
+        AudioStream sound = new AudioStream(music);
+        AudioPlayer.player.start(sound);
         } catch (Exception e){
             
         }
     }
     // A method that will play the Windows 10 Error sound
+    /**
+     * Windows 10 Error sound will be played using the playMusic() method
+     */
     public static void errorSound(){
         playMusic("Windows 10 Error Sound.wav");
     }
     // Display student but in a table form
+    /**
+     * Display student records in a tabular format
+     * Using JTable, an array StudentLabel is created, displaying the headers of the table
+     * a 2d array. displaystudent is created, inputting the student object in the array within 0 and mainindex range
+     * JOptionPane is used to display the Jtable
+     * First, displayStudents.setAutoCreateRowSorter(true); allows the user to sort the table
+     * displayStudents.getTableHeader().setReorderingAllowed(false); disables dragging of column
+     */
     public static void displayStudentTable(){
   
         Object[][] displayStudent = new Object[MainIndex][5];
@@ -67,12 +79,30 @@ public class DMITStudents{
             a++;
         }
                 }
-        JTable displayStudents = new JTable(displayStudent,Studentlabel) ;
+        JTable displayStudents = new JTable(displayStudent,Studentlabel);
         displayStudents.setAutoCreateRowSorter(true);
+        displayStudents.getTableHeader().setReorderingAllowed(false);
         JOptionPane.showMessageDialog(null,new JScrollPane(displayStudents),"DMIT",JOptionPane.INFORMATION_MESSAGE);
 
                     }
     // A method that will shift the content of an old array to a new temp array eith locations one unit higher than the old array. The old array will then have 2 extra locations added
+    /**
+     * initial length of student is 4
+     * initial length of Temp is 5
+     * when a user adds a new student, the MainIndex is 4
+     * Hence, the length + 2 is 6. This does not create the temp array yet as this is the beginning as the new name is within the range of the MainIndex[4] and size of student array[4]
+     * After the initial adding of students, the subsequent adding of students will provoke this method, this method will then recreate the Temp array that is the same size as the Index
+     * Index is the same as MainIndex : index = MainIndex
+     * After the Temp array has been created, the index will increment by 1
+     * The contents of Temp will then be moved to the new sized student array
+     * The process repeats of every new student added
+     * In summary,
+     *   If MainIndex + 2 = 6 --> Do not recreate any array
+     *           {
+     *           Temp size --> MainIndex
+     *           student size --> MainIndex+1
+     * } for every new student added
+     */
     public static void changingArray(){
         int index = MainIndex; // get current index 
          index++;
@@ -83,22 +113,35 @@ public class DMITStudents{
         Temp = new Student[index];
         }
         for(int i = 0;i < MainIndex;i++){
-            Temp[i] = new Student (student[i].getName(),student[i].getCourse(),student[i].getMobile(),student[i].getGender(),"null");
+            Temp[i] = new Student (student[i].getName(),student[i].getCourse(),student[i].getMobile(),student[i].getGender(),student[i].getTime());
         }
                 index++;
         student = new Student[index];
         for(int i = 0;i < MainIndex;i++ ){
-            student[i] = new Student (Temp[i].getName(),Temp[i].getCourse(),Temp[i].getMobile(),Temp[i].getGender(),"null");
+            student[i] = new Student (Temp[i].getName(),Temp[i].getCourse(),Temp[i].getMobile(),Temp[i].getGender(),Temp[i].getTime());
         }
     }
     // A method that will end the process 
+    //System.exit(7) will close the program
     public static void programTerminated(){
        JOptionPane.showMessageDialog(null,
                "Program terminated."
                        + "\nThank You!");
-          System.exit(6);
+          System.exit(7);
    }
     // Method that will allow user to edit Student's info
+    /**
+     * Method ask the user to input a name to edit the students and store it in String name.
+     * The name.equals(student[index].getName()) finds the student by comparing the name and the specific student array location. 
+     * If it does not find the name, it will increase index by 1 and the whole process repeats
+     * Even the process starts, there is a validation name.matches("^[ A-Za-z]+$") , it means that user can only input spacing and letters, it cannot input special characters like numbers
+     * If name is null, it implies that the user has clicked on the "Cancel" button. Hence, it will return to the main menu
+     * If the index == MainIndex - 1, the process will stop as it has reached the end of the array. Hence, it will tell the user that the name does not exist
+     * If the name is found, it will show all the details of the student: name;gender;course;mobile number as well as the time and date that the user has edit
+     * If there is no edit, it will display as "--"
+     * Users can choose to edit the name,gender,mobile number or course. Moreover, if the user amend the name but is the same as the original name,
+     * it will tell the user that the name has already been added
+     */
     public static void editInfo(){
         
         String edit = "";
@@ -108,7 +151,6 @@ public class DMITStudents{
         String stroption;
         int index = 0;
         Date date= new Date();
-        boolean edited = false;
         while(!name.matches("^[ A-Za-z]+$")){
         name = JOptionPane.showInputDialog(null,
                 "Please enter student's name to edit",
@@ -157,7 +199,6 @@ public class DMITStudents{
                     }
                     student[index] = new Student (editName,student[index].getCourse(),student[index].getMobile(),student[index].getGender(),date.toString());
                 
-                edited = true;
                 
             }else if(option == 2){
                 msg = "Please type new gender:";
@@ -166,7 +207,6 @@ public class DMITStudents{
                     return;
                 }
                      student[index] = new Student (student[index].getName(),student[index].getCourse(),student[index].getMobile(),editGender,date.toString());
-                                edited = true;
 
                 }else if(option == 3){
                 msg = "Please enter course name:";    
@@ -175,7 +215,6 @@ public class DMITStudents{
                     return;
                 }
                      student[index] = new Student (student[index].getName(),editCourse,student[index].getMobile(),student[index].getGender(),date.toString());
-                edited = true;
             }else if(option == 4){
                 msg = "Please enter your new number:";
                 editNumber = checkNum(msg);
@@ -183,7 +222,6 @@ public class DMITStudents{
                     return;
                 }
                      student[index] = new Student (student[index].getName(),student[index].getCourse(),editNumber,student[index].getGender(),date.toString());
-                edited = true;
             }else if(option == 5){
                 return;
             }
@@ -202,9 +240,12 @@ public class DMITStudents{
         }while(flag == 1);
     }
     // Method that will check for duplicate names
+    /**
+     * This method will check the duplicate when a user adds a new student
+     * When a user inputs a name, the name is first compared with the name in the array. If there is a match, it will tell the user that the name has already been added
+     */
     public static boolean checkDuplicate(String name){
         int flag =0;
-        //int index = 0;
         do{
             for(int index = 0;index < MainIndex;index++){
             if (name.equals(student[index].getName())){
@@ -222,6 +263,10 @@ public class DMITStudents{
         return false;
     }
     // A method that sets up the three inital students' information
+    /**
+     * When the program starts
+     * The first three student stated in the Assignment outline, will be added
+     */
     public static void initaliseArray(){
         //Data
         student[0] = new Student("Grace Teo","DIT",91111111,'F',"null");
@@ -229,10 +274,13 @@ public class DMITStudents{
         student[2] = new Student("Peter Low","DIT",93333333,'M',"null");
     }
     // A Method that allows users to view Students' information
+    /**
+     * 
+     */
     public static void viewStudents(){
-        for(int i = MainIndex;i < student.length;i++){
-            student[i] = new Student("null","null",0,'0',"null");
-        }
+//        for(int i = MainIndex;i < student.length;i++){
+//            student[i] = new Student("null","null",0,'0',"null");
+//        }
         String[] output = new String[MainIndex+1];
         output[0] = " S/N  Name       Gender   Course     Contact";
         for(int i =1;i <= MainIndex;i++){
