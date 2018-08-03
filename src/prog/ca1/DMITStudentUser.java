@@ -60,7 +60,7 @@ public class DMITStudentUser{
                     break;
                 case 7:
                     DMITStudents.programTerminated();
-                    break;
+                    return;
                 default:
                     DMITStudents.invalidOption();
                     break;

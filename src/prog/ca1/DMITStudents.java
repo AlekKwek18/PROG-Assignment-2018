@@ -127,7 +127,7 @@ public class DMITStudents{
        JOptionPane.showMessageDialog(null,
                "Program terminated."
                        + "\nThank You!");
-          System.exit(7);
+        //  System.exit(7);
    }
     // Method that will allow user to edit Student's info
     /**
@@ -164,6 +164,7 @@ public class DMITStudents{
             for(index = 0;index < MainIndex;index++){
             if (name.equals(student[index].getName())){
             Student editStudent = new Student();
+          
             do{
                 
             stroption = JOptionPane.showInputDialog(null,
@@ -322,7 +323,7 @@ public class DMITStudents{
      * If it does not find the name, it will increase index by 1 and the whole process repeats
      * Even the process starts, there is a validation name.matches("^[ A-Za-z]+$") , it means that user can only input spacing and letters, it cannot input special characters like numbers
      * After the index of the student has been found, it will display the student's name,gender,course and mobile number
-     * If theindex == Maindex - 1,the process will stop as it has reached the end of the array. Hence, it will tell the user that the name does not exist
+     * If the index == MainIndex - 1,the process will stop as it has reached the end of the array. Hence, it will tell the user that the name does not exist
      */
     public static void searchStudent(){
         int flag = 0;
@@ -373,7 +374,10 @@ public class DMITStudents{
     }
     // A method that adds Student's infromation - name,course,contact number and gender
     /**
-     * When a user wants to add a student, 
+     * When a user wants to add a student, it will ask for the name,gender,course and mobile
+     * It will be stored in a temp variable, after everything has been recorded, it will be stored in the student array
+     * MainIndex will then increment by 1
+     * When a user adds a name, it will activate the CheckDuplicate method, if the name is the same as the name in the array, it will tell the user that that name has already been added and cannot be added anymore
      */
     public static void addStudent(){
         //Add name
@@ -408,6 +412,16 @@ public class DMITStudents{
            JOptionPane.showMessageDialog(null,"The new student has been added successfully","DMIT Student",JOptionPane.INFORMATION_MESSAGE); 
     }
     // A method that delete a specific student's information
+     /**
+     * Method ask the user to input a name to edit the students and store it in String name.
+     * The name.equals(student[index].getName()) finds the student by comparing the name and the specific student array location. 
+     * If it does not find the name, it will increase index by 1 and the whole process repeats
+     * Even the process starts, there is a validation name.matches("^[ A-Za-z]+$") , it means that user can only input spacing and letters, it cannot input special characters like numbers
+     * suppose the location of the to be deleted student is i
+     * content of the next student ( student[i + 1] ) is shifted into Temp variables. After all the variables have been moved. 
+     * The Temp variables will then moved into student[i]. Hence, overwriting the contents of i, essentially deleting it
+     * If the i is increment out of the for loop, the method will tell the user that the student they are deleting does not exist
+     */
     public static void deleteStudents() {
         String TempName;
         String TempCourse;
@@ -450,6 +464,13 @@ public class DMITStudents{
                                    }
     }
     // A method that will validate input for char data type as well as asking the user for input
+   /**
+    * This method will ask the user to input a char input using JOptionPane
+    * As well as validating the user's input 
+    * for example, variable.matches("[a-zA-Z_]+") will only allow user to only input characters, not numbers 
+    * if a user click a "Cancel" button, it will return a '*', this variable will return to the main menu
+    * method will only accept 'M' or 'F'. If the user enters a small letter of the characters, it will turn it into uppercase letters
+    */
     public static char checkChar(String msg){
         String variable = "";
         variable = JOptionPane.showInputDialog(null,msg,"Input",JOptionPane.QUESTION_MESSAGE);
@@ -483,6 +504,13 @@ public class DMITStudents{
         return newgender;
     }
     // A method that will validate input for int data type as well as asking the user for input
+    /**
+    * This method will ask the user to input a int input using JOptionPane
+    * As well as validating the user's input 
+    * for example, variable.matches("[0-9]+") will only allow user to only input numbers, not characters
+    * if a user click a "Cancel" button, it will return a 0, this variable will return to the main menu
+    * method will only accept up to 8 numbers long. Anything less or more will not be accepted
+    */
     public static int checkNum(String msg){
         String variable ="";
                                         variable = JOptionPane.showInputDialog(null,msg);
@@ -505,6 +533,13 @@ public class DMITStudents{
       return integer;
     }
     // A method that will validate input for String data type as well as asking the user for input
+    /**
+    * This method will ask the user to input a String input using JOptionPane
+    * As well as validating the user's input 
+    * for example, variable.matches("[a-zA-Z_]+") and variable.matches("^[ A-Za-z]+$") will only allow user to only input letters, not number
+    * if a user click a "Cancel" button, it will return a "*", this variable will return to the main menu
+    * 
+    */
     public static String checkString (String msg){
         String variable;
         variable = JOptionPane.showInputDialog(null,msg,"Input",JOptionPane.QUESTION_MESSAGE);
