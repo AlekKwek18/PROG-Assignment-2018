@@ -162,7 +162,7 @@ public class DMITStudents{
 
         do{ 
             for(index = 0;index < MainIndex;index++){
-            if (name.equals(student[index].getName())){
+            if (name.equalsIgnoreCase(student[index].getName())){
             Student editStudent = new Student();
           
             do{
@@ -249,7 +249,7 @@ public class DMITStudents{
         int flag =0;
         do{
             for(int index = 0;index < MainIndex;index++){
-            if (name.equals(student[index].getName())){
+            if (name.equalsIgnoreCase(student[index].getName())){
           JOptionPane.showMessageDialog(null,
                   "This name has already been added","DMIT",JOptionPane.INFORMATION_MESSAGE);
                   return true;
@@ -269,10 +269,11 @@ public class DMITStudents{
      * The first three student stated in the Assignment outline, will be added
      */
     public static void initaliseArray(){
+        String set_date = "--";
         //Data
-        student[0] = new Student("Grace Teo","DIT",91111111,'F',"null");
-        student[1] = new Student("Kenny Tan","DIT",92222222,'M',"null");
-        student[2] = new Student("Peter Low","DIT",93333333,'M',"null");
+        student[0] = new Student("Grace Teo","DIT",91111111,'F',set_date);
+        student[1] = new Student("Kenny Tan","DIT",92222222,'M',set_date);
+        student[2] = new Student("Peter Low","DIT",93333333,'M',set_date);
     }
     // A Method that allows users to view Students' information
     /** 
@@ -351,7 +352,7 @@ public class DMITStudents{
         
         do{
             for(int index = 0;index < MainIndex;index++){
-            if (name.equals(student[index].getName())){
+            if (name.equalsIgnoreCase(student[index].getName())){
           JOptionPane.showMessageDialog(null,
                   "Name      :"+student[index].getName()+"\n"+
                   "Gender    :"+student[index].getGender()+"\n"+
@@ -414,7 +415,7 @@ public class DMITStudents{
     // A method that delete a specific student's information
      /**
      * Method ask the user to input a name to edit the students and store it in String name.
-     * The name.equals(student[index].getName()) finds the student by comparing the name and the specific student array location. 
+     * The name.equalsIgnoreCase(student[index].getName()) finds the student by comparing the name and the specific student array location. 
      * If it does not find the name, it will increase index by 1 and the whole process repeats
      * Even the process starts, there is a validation name.matches("^[ A-Za-z]+$") , it means that user can only input spacing and letters, it cannot input special characters like numbers
      * suppose the location of the to be deleted student is i
@@ -441,7 +442,7 @@ public class DMITStudents{
 }
                 }
                 for(int i = 0; i<MainIndex; i++){
-                    if(nameDelete.equals(student[i].getName())){
+                    if(nameDelete.equalsIgnoreCase(student[i].getName())){
                         JOptionPane.showMessageDialog(null, nameDelete + " has been deleted successfully.", "DMIT Students", JOptionPane.INFORMATION_MESSAGE);
                         for(int a = i; a<MainIndex-1; a++){
                             TempName = student[a+1].getName();
@@ -544,7 +545,7 @@ public class DMITStudents{
         String variable;
         variable = JOptionPane.showInputDialog(null,msg,"Input",JOptionPane.QUESTION_MESSAGE);
         try{
-            if(msg.equals("Please enter course")){
+            if(msg.equalsIgnoreCase("Please enter course")){
         variable.matches("[a-zA-Z_]+");
             } else{
         variable.matches("^[ A-Za-z]+$");
@@ -552,12 +553,12 @@ public class DMITStudents{
         }catch(NullPointerException e){
         return "*";
         }
-        if(msg.equals("Please enter course")){
+        if(msg.equalsIgnoreCase("Please enter course")){
           while(!variable.matches("[a-zA-Z_]+")){
         variable = JOptionPane.showInputDialog(null,
                 msg,"input",JOptionPane.QUESTION_MESSAGE); 
         try{
-            if(msg.equals("Please enter course")){
+            if(msg.equalsIgnoreCase("Please enter course")){
         variable.matches("[a-zA-Z_]+");
             } else{
         variable.matches("^[ A-Za-z]+$");
@@ -571,7 +572,7 @@ public class DMITStudents{
         variable = JOptionPane.showInputDialog(null,
                 msg,"input",JOptionPane.QUESTION_MESSAGE);
         try{
-            if(msg.equals("Please enter course")){
+            if(msg.equalsIgnoreCase("Please enter course")){
         variable.matches("[a-zA-Z_]+");
             } else{
         variable.matches("^[ A-Za-z]+$");
@@ -581,7 +582,7 @@ public class DMITStudents{
         }
         }
         }
-          if(msg.equals("Please enter student's course:") || msg.equals("Please enter course name:") )
+          if(msg.equalsIgnoreCase("Please enter student's course:") || msg.equals("Please enter course name:") )
             variable = variable.toUpperCase();
         return variable;
     }
