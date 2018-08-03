@@ -4,70 +4,125 @@
  * and open the template in the editor.
  */
 package prog.ca1;
-
 /**
  *
  * @author guozh
  */
 //
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+import java.util.Date;
 //import static programming.assignment.Student.student;
 public class DMITStudents{
-    
     //Array index will be set to 3 as location 0 to 2 has been initized.
     private static int MainIndex = 3;
     //Set and initialize array of Student class name,course,gender and contact respectively with a size of 4
     private static Student[] student = new Student [MainIndex+1];
     //Set and initalize array of Temp class name,course,gender and contact respectively with a size of 5
     private static Student[] Temp = new Student [MainIndex+2];
-    public static void setColor(){
-        
+    // A method that will play a sound in java
+    /**
+     * InputStream data type called music is created
+     * 
+     */
+    public static void playMusic(String x){
+        try{
+        InputStream music;
+        music = new FileInputStream(new File(x));
+        AudioStream audios = new AudioStream(music);
+        AudioPlayer.player.start(audios);
+        } catch (Exception e){
+            
+        }
     }
+    // A method that will play the Windows 10 Error sound
+    public static void errorSound(){
+        playMusic("Windows 10 Error Sound.wav");
+    }
+    // Display student but in a table form
+    public static void displayStudentTable(){
+  
+        Object[][] displayStudent = new Object[MainIndex][5];
+        int a = 0;
+        String[] Studentlabel = {"S/N","Name","Gender","Course","Contact"};
+        for(int i = 0;i<MainIndex;i++){
+            a = 0;
+        while(a < 5){
+            displayStudent [i][a] = i+1;
+            a++;
+            displayStudent [i][a] = student[i].getName();
+            a++;
+            displayStudent [i][a] = student[i].getGender();
+            a++;
+            displayStudent [i][a] = student[i].getCourse();
+            a++;
+            displayStudent [i][a] = student[i].getMobile();
+            a++;
+        }
+                }
+        JTable displayStudents = new JTable(displayStudent,Studentlabel) ;
+        displayStudents.setAutoCreateRowSorter(true);
+        JOptionPane.showMessageDialog(null,new JScrollPane(displayStudents),"DMIT",JOptionPane.INFORMATION_MESSAGE);
+
+                    }
+    // A method that will shift the content of an old array to a new temp array eith locations one unit higher than the old array. The old array will then have 2 extra locations added
     public static void changingArray(){
         int index = MainIndex; // get current index 
          index++;
+         //initial length of the array
         if(MainIndex + 2 == 6 ){
             //Do nothing
         }else {
         Temp = new Student[index];
         }
         for(int i = 0;i < MainIndex;i++){
-            Temp[i] = new Student (student[i].getName(),student[i].getCourse(),student[i].getMobile(),student[i].getGender());
+            Temp[i] = new Student (student[i].getName(),student[i].getCourse(),student[i].getMobile(),student[i].getGender(),"null");
         }
                 index++;
         student = new Student[index];
         for(int i = 0;i < MainIndex;i++ ){
-            student[i] = new Student (Temp[i].getName(),Temp[i].getCourse(),Temp[i].getMobile(),Temp[i].getGender());
+            student[i] = new Student (Temp[i].getName(),Temp[i].getCourse(),Temp[i].getMobile(),Temp[i].getGender(),"null");
         }
     }
-   //A method that will end the process 
+    // A method that will end the process 
     public static void programTerminated(){
        JOptionPane.showMessageDialog(null,
                "Program terminated."
                        + "\nThank You!");
           System.exit(6);
    }
-    //Method that will allow user to edit Student's info
+    // Method that will allow user to edit Student's info
     public static void editInfo(){
+        
+        String edit = "";
         int flag = 0;
-        String name;
+        String name = "";
         int option;
         String stroption;
-        
-        name = JOptionPane.showInputDialog(null,
-                "Please enter student's name to edit",
-                "DMIT Student",JOptionPane.QUESTION_MESSAGE); 
+        int index = 0;
+        Date date= new Date();
+        boolean edited = false;
         while(!name.matches("^[ A-Za-z]+$")){
         name = JOptionPane.showInputDialog(null,
                 "Please enter student's name to edit",
                 "DMIT Student",JOptionPane.QUESTION_MESSAGE);     
+                if(name == null){
+               return;
+}
         }
-        int index = 0;
-        do{
-            for(index = 0;index <= MainIndex;index++){
+
+        do{ 
+            for(index = 0;index < MainIndex;index++){
             if (name.equals(student[index].getName())){
             Student editStudent = new Student();
             do{
+                
             stroption = JOptionPane.showInputDialog(null,
                   "Name      :"+student[index].getName()+"\n"+
                   "Gender    :"+student[index].getGender()+"\n"+
@@ -78,7 +133,8 @@ public class DMITStudents{
                   "2) Gender \n"+
                   "3) Course \n"+
                   "4) Mobile \n"+
-                  "5) Exit \n",       
+                  "5) Exit \n"+
+                  "Last edited:" + student[index].getTime(),       
                   "DMIT Students",JOptionPane.INFORMATION_MESSAGE);
             try{
             option = Integer.parseInt(stroption);  
@@ -98,8 +154,9 @@ public class DMITStudents{
             return;
             
                     }
-                    student[index] = new Student (editName,student[index].getCourse(),student[index].getMobile(),student[index].getGender());
+                    student[index] = new Student (editName,student[index].getCourse(),student[index].getMobile(),student[index].getGender(),date.toString());
                 
+                edited = true;
                 
             }else if(option == 2){
                 msg = "Please type new gender:";
@@ -107,7 +164,8 @@ public class DMITStudents{
                 if(editGender == '*'){
                     return;
                 }
-                     student[index] = new Student (student[index].getName(),student[index].getCourse(),student[index].getMobile(),editGender);
+                     student[index] = new Student (student[index].getName(),student[index].getCourse(),student[index].getMobile(),editGender,date.toString());
+                                edited = true;
 
                 }else if(option == 3){
                 msg = "Please enter course name:";    
@@ -115,23 +173,23 @@ public class DMITStudents{
                 if(editCourse == "*"){
                     return;
                 }
-                     student[index] = new Student (student[index].getName(),editCourse,student[index].getMobile(),student[index].getGender());
-
+                     student[index] = new Student (student[index].getName(),editCourse,student[index].getMobile(),student[index].getGender(),date.toString());
+                edited = true;
             }else if(option == 4){
                 msg = "Please enter your new number:";
                 editNumber = checkNum(msg);
                 if(editNumber == 0){
                     return;
                 }
-                     student[index] = new Student (student[index].getName(),student[index].getCourse(),editNumber,student[index].getGender());
-
+                     student[index] = new Student (student[index].getName(),student[index].getCourse(),editNumber,student[index].getGender(),date.toString());
+                edited = true;
             }else if(option == 5){
                 return;
             }
             }while(stroption != "");
                   return;
         }else{    
-                      if(index == MainIndex){
+                      if(index == MainIndex-1){
                      JOptionPane.showMessageDialog(null,
                    "Cannot find info of "+ name,"DMIT Students",
                    JOptionPane.INFORMATION_MESSAGE);
@@ -142,7 +200,7 @@ public class DMITStudents{
             }
         }while(flag == 1);
     }
-    //Method that will check for duplicate names
+    // Method that will check for duplicate names
     public static boolean checkDuplicate(String name){
         int flag =0;
         //int index = 0;
@@ -162,24 +220,24 @@ public class DMITStudents{
         }while(flag == 1);
         return false;
     }
-    //A method that sets up the three inital students' information
+    // A method that sets up the three inital students' information
     public static void initaliseArray(){
         //Data
-        student[0] = new Student("Grace Teo","DIT",91111111,'F');
-        student[1] = new Student("Kenny Tan","DIT",92222222,'M');
-        student[2] = new Student("Peter Low","DIT",93333333,'M');
+        student[0] = new Student("Grace Teo","DIT",91111111,'F',"null");
+        student[1] = new Student("Kenny Tan","DIT",92222222,'M',"null");
+        student[2] = new Student("Peter Low","DIT",93333333,'M',"null");
     }
-    //A Method that allows users to view Students' information
+    // A Method that allows users to view Students' information
     public static void viewStudents(){
         for(int i = MainIndex;i < student.length;i++){
-            student[i] = new Student("null","null",0,'0');
+            student[i] = new Student("null","null",0,'0',"null");
         }
         String[] output = new String[MainIndex+1];
         output[0] = " S/N  Name       Gender   Course     Contact";
         for(int i =1;i <= MainIndex;i++){
              if(student[i].getName() != null){
              //int y = i +1;
-             String Temp = i+" "+student[i-1].getName()+"     " +
+             String Temp = i+" "+student[i-1].getName() + "     "+
                      student[i-1].getCourse()+"     " +
                      student[i-1].getGender()+"     " +
                      student[i-1].getMobile();
@@ -195,14 +253,13 @@ public class DMITStudents{
     // A message that display if user type a number which is not an option in JOptionPane
     public static void invalidOption(){
        JOptionPane.showMessageDialog(null,
-               "Invalid option! Please enter in the range from 1 to 5",
+               "Invalid option! Please enter in the range from 1 to 7",
                "Error",JOptionPane.ERROR_MESSAGE);
   } 
     // A method that allows users to find specific student's information
     public static void searchStudent(){
         int flag = 0;
         String name;
-        
         name = JOptionPane.showInputDialog(null,
                 "Please enter student's name to search",
                 "DMIT Student",JOptionPane.QUESTION_MESSAGE); 
@@ -242,7 +299,7 @@ public class DMITStudents{
             }
         }while(flag == 1);
     }
-    //A method that adds Student's infromation - name,course,contact number and gender
+    // A method that adds Student's infromation - name,course,contact number and gender
     public static void addStudent(){
         //Add name
         String name;
@@ -269,38 +326,41 @@ public class DMITStudents{
         if(gender == '*'){
             return;
         }
-        student[MainIndex] = new Student(name,course,mobile,gender);
+        student[MainIndex] = new Student(name,course,mobile,gender,"null");
         MainIndex++;
         changingArray();
         
            JOptionPane.showMessageDialog(null,"The new student has been added successfully","DMIT Student",JOptionPane.INFORMATION_MESSAGE); 
     }
-    //A method that delete a specific student's information
+    // A method that delete a specific student's information
     public static void deleteStudents() {
         String TempName;
         String TempCourse;
         String nameDelete;
         int TempMobile;
         char TempGender;
-        
+        String TempDate;
         int flag= 0;
-                
                 nameDelete = JOptionPane.showInputDialog(null,"Please enter student's name to delete.");
+                if(nameDelete == null){
+               return;
+}
                 while(!nameDelete.matches("^[ A-Za-z]+$")){
-                nameDelete = JOptionPane.showInputDialog(null,"Please enter student's name to delete.");    
+                nameDelete = JOptionPane.showInputDialog(null,"Please enter student's name to delete.");  
+                if(nameDelete == null){
+               return;
+}
                 }
-               
                 for(int i = 0; i<MainIndex; i++){
-                    
                     if(nameDelete.equals(student[i].getName())){
-                        
                         JOptionPane.showMessageDialog(null, nameDelete + " has been deleted successfully.", "DMIT Students", JOptionPane.INFORMATION_MESSAGE);
                         for(int a = i; a<MainIndex-1; a++){
                             TempName = student[a+1].getName();
                             TempCourse = student[a+1].getCourse();
                             TempMobile = student[a+1].getMobile();
                             TempGender = student[a+1].getGender();
-                            student[a] = new Student(TempName,TempCourse,TempMobile,TempGender);
+                            TempDate = student[a+1].getTime();
+                            student[a] = new Student(TempName,TempCourse,TempMobile,TempGender,TempDate);
                             }
                             flag = 1;
                         }
@@ -310,11 +370,12 @@ public class DMITStudents{
                 changingArray();
                }
                 if(flag != 1){
+                    errorSound(); 
                     JOptionPane.showMessageDialog(null, "The student name " + nameDelete + " cannot be found!", "Error", JOptionPane.ERROR_MESSAGE);
-                }
+                                   }
     }
-
-public static char checkChar(String msg){
+    // A method that will validate input for char data type as well as asking the user for input
+    public static char checkChar(String msg){
         String variable = "";
         variable = JOptionPane.showInputDialog(null,msg,"Input",JOptionPane.QUESTION_MESSAGE);
         try{
@@ -346,6 +407,7 @@ public static char checkChar(String msg){
         char newgender = Character.toUpperCase(charnewgender);
         return newgender;
     }
+    // A method that will validate input for int data type as well as asking the user for input
     public static int checkNum(String msg){
         String variable ="";
                                         variable = JOptionPane.showInputDialog(null,msg);
@@ -365,14 +427,12 @@ public static char checkChar(String msg){
                 }  
         }
        int integer = Integer.parseInt(variable);   
-      
       return integer;
     }
-   
+    // A method that will validate input for String data type as well as asking the user for input
     public static String checkString (String msg){
         String variable;
         variable = JOptionPane.showInputDialog(null,msg,"Input",JOptionPane.QUESTION_MESSAGE);
-        
         try{
             if(msg.equals("Please enter course")){
         variable.matches("[a-zA-Z_]+");
@@ -411,7 +471,7 @@ public static char checkChar(String msg){
         }
         }
         }
-          if(msg.equals("Please enter student's course:") )
+          if(msg.equals("Please enter student's course:") || msg.equals("Please enter course name:") )
             variable = variable.toUpperCase();
         return variable;
     }
