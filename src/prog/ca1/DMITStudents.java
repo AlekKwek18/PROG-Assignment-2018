@@ -29,6 +29,7 @@ public class DMITStudents{
     // A method that will play a sound in java
     /**
      * InputStream data type called music is created
+     * File(x) is the wave file
      * 
      */
     public static void playMusic(String x){
@@ -237,9 +238,9 @@ public class DMITStudents{
         for(int i =1;i <= MainIndex;i++){
              if(student[i].getName() != null){
              //int y = i +1;
-             String Temp = i+" "+student[i-1].getName() + "     "+
-                     student[i-1].getCourse()+"     " +
-                     student[i-1].getGender()+"     " +
+             String Temp = i+" "+student[i-1].getName() + "        "+
+                     student[i-1].getGender()+"            " +
+                     student[i-1].getCourse()+"          " +
                      student[i-1].getMobile();
              output[i] = Temp;
              }else{
