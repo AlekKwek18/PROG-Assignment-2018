@@ -274,13 +274,19 @@ public class DMITStudents{
         student[2] = new Student("Peter Low","DIT",93333333,'M',"null");
     }
     // A Method that allows users to view Students' information
-    /**
-     * 
+    /** 
+     * The output array is created to allow the contents of student array to be displayed
+     * output[0] stores the header of the table:" S/N  Name       Gender   Course     Contact"
+     * The first for loop sets the student array to be "null" for String, 0 for numbers and '0' for char
+     * This is show that when the number is displaying, it will not cause a NullPointerException
+     * The second for loop process the moving of student array data to output[i]
+     * i will increase for each row of student until it is equal to the size of the MainIndex
+     * After the loop is done, it will display it using JOptionPane.showMessageDialog
      */
     public static void viewStudents(){
-//        for(int i = MainIndex;i < student.length;i++){
-//            student[i] = new Student("null","null",0,'0',"null");
-//        }
+        for(int i = MainIndex;i < student.length;i++){
+            student[i] = new Student("null","null",0,'0',"null");
+        }
         String[] output = new String[MainIndex+1];
         output[0] = " S/N  Name       Gender   Course     Contact";
         for(int i =1;i <= MainIndex;i++){
@@ -300,12 +306,24 @@ public class DMITStudents{
 
     }
     // A message that display if user type a number which is not an option in JOptionPane
+    /**
+     * The method will be used if the user has entered any values besides the numbers in the main menu
+     */
     public static void invalidOption(){
        JOptionPane.showMessageDialog(null,
                "Invalid option! Please enter in the range from 1 to 7",
                "Error",JOptionPane.ERROR_MESSAGE);
   } 
     // A method that allows users to find specific student's information
+    /**
+     * searchStudent method finds the students the user want
+     * Method ask the user to input a name to edit the students and store it in String name.
+     * The name.equals(student[index].getName()) finds the student by comparing the name and the specific student array location. 
+     * If it does not find the name, it will increase index by 1 and the whole process repeats
+     * Even the process starts, there is a validation name.matches("^[ A-Za-z]+$") , it means that user can only input spacing and letters, it cannot input special characters like numbers
+     * After the index of the student has been found, it will display the student's name,gender,course and mobile number
+     * If theindex == Maindex - 1,the process will stop as it has reached the end of the array. Hence, it will tell the user that the name does not exist
+     */
     public static void searchStudent(){
         int flag = 0;
         String name;
@@ -318,10 +336,15 @@ public class DMITStudents{
                 return;
             }
         while(!name.matches("^[ A-Za-z]+$")){
-           
+            
         name = JOptionPane.showInputDialog(null,
                 "Please enter student's name to search",
-                "DMIT Student",JOptionPane.QUESTION_MESSAGE);     
+                "DMIT Student",JOptionPane.QUESTION_MESSAGE); 
+         try{
+                name.matches("^[ A-Za-z]+$");
+            }catch(NullPointerException e){
+                return;
+            }
         }
         
         
@@ -349,6 +372,9 @@ public class DMITStudents{
         }while(flag == 1);
     }
     // A method that adds Student's infromation - name,course,contact number and gender
+    /**
+     * When a user wants to add a student, 
+     */
     public static void addStudent(){
         //Add name
         String name;
