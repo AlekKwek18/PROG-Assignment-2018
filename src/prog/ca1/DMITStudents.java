@@ -5,7 +5,7 @@
  */
 package prog.ca1;
 /**
- *
+ * 
  * @author guozh
  */
 //
@@ -80,6 +80,7 @@ public class DMITStudents{
         }
                 }
         JTable displayStudents = new JTable(displayStudent,Studentlabel);
+        displayStudents.setEnabled(false);
         displayStudents.setAutoCreateRowSorter(true);
         displayStudents.getTableHeader().setReorderingAllowed(false);
         JOptionPane.showMessageDialog(null,new JScrollPane(displayStudents),"DMIT",JOptionPane.INFORMATION_MESSAGE);
@@ -122,12 +123,11 @@ public class DMITStudents{
         }
     }
     // A method that will end the process 
-    //System.exit(7) will close the program
+    // return in the DMITStudentUser will close the program
     public static void programTerminated(){
        JOptionPane.showMessageDialog(null,
                "Program terminated."
                        + "\nThank You!");
-        //  System.exit(7);
    }
     // Method that will allow user to edit Student's info
     /**
