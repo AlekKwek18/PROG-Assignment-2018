@@ -195,34 +195,39 @@ public class DMITStudents{
                 editName = checkString(msg);
                 
                     if (editName.equals("*") || checkDuplicate(editName)==true){
-            return;
+//            return;
             
-                    }
+                    }else{
                     student[index] = new Student (editName,student[index].getCourse(),student[index].getMobile(),student[index].getGender(),date.toString());
-                
+                    }
                 
             }else if(option == 2){
                 msg = "Please type new gender:";
                 editGender = checkChar(msg);
                 if(editGender == '*'){
-                    return;
-                }
-                     student[index] = new Student (student[index].getName(),student[index].getCourse(),student[index].getMobile(),editGender,date.toString());
+//                    return;
 
+                }else{
+                     student[index] = new Student (student[index].getName(),student[index].getCourse(),student[index].getMobile(),editGender,date.toString());
+                }
                 }else if(option == 3){
                 msg = "Please enter course name:";    
                 editCourse = checkString(msg);
                 if(editCourse == "*"){
-                    return;
-                }
+//                    return;
+
+                }else{
                      student[index] = new Student (student[index].getName(),editCourse,student[index].getMobile(),student[index].getGender(),date.toString());
+                }
             }else if(option == 4){
                 msg = "Please enter your new number:";
                 editNumber = checkNum(msg);
                 if(editNumber == 0){
-                    return;
-                }
+//                    return;
+
+                }else{
                      student[index] = new Student (student[index].getName(),student[index].getCourse(),editNumber,student[index].getGender(),date.toString());
+                }
             }else if(option == 5){
                 return;
             }
