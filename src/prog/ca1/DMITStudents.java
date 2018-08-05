@@ -200,7 +200,7 @@ public class DMITStudents {
                         option = Integer.parseInt(stroption);
                         String editName;
                         String editCourse;
-                        int editNumber;
+                        String editNumber;
                         char editGender;
                         String msg;
                         if (option == 1) {
@@ -229,7 +229,7 @@ public class DMITStudents {
                         } else if (option == 4) {
                             msg = "Please enter your new number:";
                             editNumber = checkNum(msg);
-                            if (editNumber == 0) {
+                            if (editNumber == "0") {
                             } else {
                                 student[index] = new Student(student[index].getName(), student[index].getCourse(), editNumber, student[index].getGender(), date.toString());
                             }
@@ -285,9 +285,9 @@ public class DMITStudents {
     public static void initaliseArray() {
         String set_date = "--";
         //Data
-        student[0] = new Student("Grace Teo", "DIT", 91111111, 'F', set_date);
-        student[1] = new Student("Kenny Tan", "DIT", 92222222, 'M', set_date);
-        student[2] = new Student("Peter Low", "DIT", 93333333, 'M', set_date);
+        student[0] = new Student("Grace Teo", "DIT", "91111111", 'F', set_date);
+        student[1] = new Student("Kenny Tan", "DIT", "92222222", 'M', set_date);
+        student[2] = new Student("Peter Low", "DIT", "93333333", 'M', set_date);
     }
 
     // A Method that allows users to view Students' information
@@ -304,7 +304,7 @@ public class DMITStudents {
      */
     public static void viewStudents() {
         for (int i = MainIndex; i < student.length; i++) {
-            student[i] = new Student("null", "null", 0, '0', "null");
+            student[i] = new Student("null", "null", "0", '0', "null");
         }
         String[] output = new String[MainIndex + 1];
         output[0] = " S/N  Name       Gender   Course     Contact";
@@ -423,8 +423,8 @@ public class DMITStudents {
         }
         //Add number
         msg = "Please enter student's mobile:";
-        int mobile = checkNum(msg);
-        if (mobile == 0) {
+        String mobile = checkNum(msg);
+        if (mobile == "0") {
             return;
         }
         //Add gender
@@ -460,7 +460,7 @@ public class DMITStudents {
         String TempName;
         String TempCourse;
         String nameDelete;
-        int TempMobile;
+        String TempMobile;
         char TempGender;
         String TempDate;
         int flag = 0;
@@ -550,7 +550,7 @@ public class DMITStudents {
      * this variable will return to the main menu method will only accept up to
      * 8 numbers long. Anything less or more will not be accepted
      */
-    public static int checkNum(String msg) {
+    public static String checkNum(String msg) {
         String variable = "";
         variable = JOptionPane.showInputDialog(null, msg);
         try {
@@ -558,7 +558,7 @@ public class DMITStudents {
                 variable = JOptionPane.showInputDialog(null, msg, "Input", JOptionPane.QUESTION_MESSAGE);
             }
         } catch (NullPointerException e) {
-            return 0;
+            return "0";
         }
         while (!variable.matches("[0-9]+") || !(variable.length() == 8)) {
             variable = JOptionPane.showInputDialog(null, msg, "Input", JOptionPane.QUESTION_MESSAGE);
@@ -567,11 +567,10 @@ public class DMITStudents {
                     variable = JOptionPane.showInputDialog(null, msg, "Input", JOptionPane.QUESTION_MESSAGE);
                 }
             } catch (NullPointerException e) {
-                return 0;
+                return "0";
             }
         }
-        int integer = Integer.parseInt(variable);
-        return integer;
+        return variable;
     }
 
     // A method that will validate input for String data type as well as asking the user for input

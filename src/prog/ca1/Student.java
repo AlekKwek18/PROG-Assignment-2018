@@ -13,14 +13,14 @@ public class Student {
 
     public String name;  //represents the name of a student 
     public String course; //represents the course that the student studies 
-    public int mobile;  //represents the contact number of the student
+    public String mobile;  //represents the contact number of the student
     public char gender; //represents the gender of the student
     public String dateedit; //represents the time of the object that has been edited
 
     public Student() {
     }
 
-    public Student(String inputname, String inputcourse, int inputmobile, char inputgender, String time_edited) {
+    public Student(String inputname, String inputcourse, String inputmobile, char inputgender, String time_edited) {
         this.name = inputname;
         this.course = inputcourse;
         this.mobile = inputmobile;
@@ -40,7 +40,7 @@ public class Student {
         return course;
     }
 
-    public int getMobile() {
+    public String getMobile() {
         return mobile;
     }
 
