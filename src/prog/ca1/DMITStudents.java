@@ -541,9 +541,9 @@ public class DMITStudents {
         return newgender;
     }
 
-    // A method that will validate input for int data type as well as asking the user for input
+    // A method that will validate input for String data type as well as asking the user for input
     /**
-     * This method will ask the user to input a int input using JOptionPane As
+     * This method will ask the user to input a String input using JOptionPane As
      * well as validating the user's input for example,
      * variable.matches("[0-9]+") will only allow user to only input numbers,
      * not characters if a user click a "Cancel" button, it will return a 0,
