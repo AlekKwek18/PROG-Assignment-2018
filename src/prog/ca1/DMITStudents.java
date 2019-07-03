@@ -629,5 +629,4 @@ public class DMITStudents {
         }
         return variable;
     }
-System.out.println("Hello jing yi");
 }
